@@ -6,8 +6,12 @@ print('hallo')
 mc=Minecraft.create()
 pos=mc.player.getTilePos()
 mc.postToChat("x="+str(pos.x)+"y="+str(pos.y)+"z="+str(pos.z))
+
+
+Bases=[[-142,-129,-177,-171,"1"]]
+
 def house(a_x,a_y,a_z):
-     
+    global Bases    
     for z in range (10):
         for x in range (10):
             mc.setBlock(a_x+x,a_y,a_z+z,17)#地板
@@ -27,7 +31,30 @@ def house(a_x,a_y,a_z):
     for z in range (10):
         for x in range (10):
             mc.setBlock(a_x+x,a_y+5,a_z+z,20)#天花板
+    Base=[a_x,a_x+10,a_z,a_z+10,"1"]
+    Bases.append(Base)
+            
 house(pos.x,pos.y,pos.z)
+house(pos.x+20,pos.y,pos.z)
+house(pos.x,pos.y,pos.z+20)
+house(pos.x+20,pos.y,pos.z+20)
 
+print(Bases)
 
+Bases[1][4]="4"
+Bases[2][4]="3"
+Bases[3][4]="5"
+Bases[4][4]="1"
 
+while True:
+    time.sleep(0.5)
+    pos=mc.player.getTilePos()
+    mc.postToChat("please goto home x=-30 y=-6 z=-40 for 15s to fly")
+    mc.postToChat("x:"+str(pos.x)+"y:"+str(pos.y)+"z:"+str(pos.z))
+
+    for Base in Bases:
+        if pos.x>Base[0] and pos.x<Base[1] and pos.z>Base[2] and pos.z<Base[3]:
+            mc.postToChat("Base[4]"+str(Base[4]))
+            #ser.write(Base[4].encode())
+        else:
+            mc.postToChat("outside")
